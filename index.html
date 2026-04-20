@@ -6,7 +6,7 @@
 <title>איריס צדיק | אומנות הטיפוח הטבעי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Heebo:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&family=Heebo:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --white: #FDFBF7;
@@ -23,6 +23,11 @@
     --text-mid: #5A5248;
     --text-light: #8A7E72;
     --border: rgba(201,169,110,0.25);
+    /* New heading gradient colors - green + purple blend, elegant */
+    --heading-green: #6A9C7F;
+    --heading-purple: #7E6E9A;
+    --heading-gradient: linear-gradient(135deg, #6A9C7F 0%, #8B7BAD 100%);
+    --heading-gradient-light: linear-gradient(135deg, #7AAF8F 0%, #9B8BBD 100%);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,8 +48,9 @@
   /* ===== NAV ===== */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; transition: all 0.5s ease; }
   nav.scrolled { background: rgba(253,251,247,0.92); backdrop-filter: blur(20px); padding: 14px 60px; border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; letter-spacing: 0.2em; color: var(--text-dark); text-decoration: none; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 400; letter-spacing: 0.2em; color: var(--text-dark); text-decoration: none; }
   .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-family: 'Heebo', sans-serif; font-weight: 300; font-size: 0.88rem; letter-spacing: 0.08em; color: var(--text-mid); text-decoration: none; position: relative; transition: color 0.3s; }
   .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s ease; }
   .nav-links a:hover { color: var(--gold); }
   .nav-links a:hover::after { transform: scaleX(1); }
@@ -66,17 +72,52 @@
   @keyframes leafFloat { 0%, 100% { transform: rotate(-10deg) translateY(0); } 50% { transform: rotate(10deg) translateY(-15px); } }
   .hero-inner { position: relative; z-index: 2; text-align: center; padding: 40px 20px; max-width: 800px; }
   .hero-logo-wrap { margin-bottom: 36px; animation: fadeInUp 1.2s ease forwards; }
-  .logo-placeholder { width: 220px; height: 220px; border-radius: 50%; background: linear-gradient(135deg, var(--sage-pale), var(--cream)); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 0 8px rgba(143,175,138,0.08), 0 0 40px rgba(201,169,110,0.15), 0 20px 40px rgba(0,0,0,0.06); animation: logoGlow 3s ease-in-out infinite, fadeInScale 1.4s ease forwards; overflow: hidden; }
-  .logo-placeholder img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* Enlarged circle with slideshow */
+  .logo-placeholder {
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage-pale), var(--cream));
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 0 0 8px rgba(143,175,138,0.08), 0 0 40px rgba(201,169,110,0.15), 0 20px 40px rgba(0,0,0,0.06);
+    animation: logoGlow 3s ease-in-out infinite, fadeInScale 1.4s ease forwards;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Slideshow images inside logo circle */
+  .logo-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .logo-slide.active { opacity: 1; }
+  .logo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 50%;
+  }
+
   @keyframes logoGlow { 0%, 100% { box-shadow: 0 0 0 8px rgba(143,175,138,0.08), 0 0 40px rgba(201,169,110,0.15), 0 20px 40px rgba(0,0,0,0.06); } 50% { box-shadow: 0 0 0 14px rgba(143,175,138,0.12), 0 0 70px rgba(201,169,110,0.25), 0 20px 40px rgba(0,0,0,0.08); } }
   @keyframes fadeInScale { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.2rem, 8vw, 6.5rem); font-weight: 300; letter-spacing: 0.06em; color: var(--text-dark); line-height: 1; margin-bottom: 14px; animation: fadeInUp 1s 0.3s ease both; }
-  .hero-name span { color: var(--sage); font-style: italic; }
-  .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 28px; text-transform: uppercase; animation: fadeInUp 1s 0.5s ease both; }
+
+  /* Changed: hero-name uses Bodoni Moda for luxury feel */
+  .hero-name { font-family: 'Bodoni Moda', serif; font-size: clamp(3.2rem, 8vw, 6.5rem); font-weight: 300; letter-spacing: 0.06em; color: var(--text-dark); line-height: 1; margin-bottom: 14px; animation: fadeInUp 1s 0.3s ease both; }
+  .hero-name span { background: var(--heading-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
+  .hero-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 400; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 28px; text-transform: uppercase; animation: fadeInUp 1s 0.5s ease both; }
   .hero-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 28px; animation: fadeInUp 1s 0.6s ease both; }
-  .hero-text { font-family: 'Heebo', sans-serif; font-size: clamp(0.85rem, 1.8vw, 1rem); font-weight: 300; color: var(--text-mid); line-height: 2; letter-spacing: 0.03em; max-width: 480px; margin: 0 auto 36px; animation: fadeInUp 1s 0.7s ease both; }
+  .hero-text { font-family: 'Frank Ruhl Libre', serif; font-size: clamp(0.9rem, 1.8vw, 1.05rem); font-weight: 300; color: var(--text-mid); line-height: 2; letter-spacing: 0.03em; max-width: 480px; margin: 0 auto 36px; animation: fadeInUp 1s 0.7s ease both; }
   .hero-moods { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1s 0.9s ease both; }
-  .hero-mood { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; font-style: italic; color: var(--text-light); letter-spacing: 0.05em; }
+  .hero-mood { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400; font-style: italic; color: var(--text-light); letter-spacing: 0.05em; }
   .hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeIn 2s 1.5s ease both; }
   .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
   .scroll-text { font-size: 0.62rem; letter-spacing: 0.25em; color: var(--text-light); text-transform: uppercase; font-weight: 300; }
@@ -86,12 +127,47 @@
 
   /* ===== SECTIONS COMMON ===== */
   section { padding: 100px 60px; }
-  .section-tag { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); font-weight: 400; margin-bottom: 14px; display: block; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: var(--sage); line-height: 1.2; margin-bottom: 16px; }
-  .section-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2vw, 1.25rem); font-style: italic; color: var(--sage); font-weight: 300; margin-bottom: 30px; }
+  .section-tag { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); font-weight: 400; margin-bottom: 14px; display: block; font-family: 'Heebo', sans-serif; }
+  /* All section-title now use gradient green+purple */
+  .section-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    background: var(--heading-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  /* On dark backgrounds override to white */
+  #mature .section-title,
+  #contact .section-title {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: var(--white);
+    background-clip: unset;
+    color: var(--white);
+  }
+  .section-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 2vw, 1.25rem); font-style: italic; color: var(--heading-green); font-weight: 400; margin-bottom: 30px; }
+  #mature .section-subtitle { color: var(--gold-light); }
   .gold-divider { width: 50px; height: 1px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); margin-bottom: 30px; }
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== WHY NATURAL — moved to first section after hero ===== */
+  #why { background: linear-gradient(135deg, var(--sage-pale) 0%, var(--cream) 100%); text-align: center; position: relative; overflow: hidden; }
+  .why-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.10; pointer-events: none; z-index: 0; }
+  #why > *:not(.why-bg-video) { position: relative; z-index: 1; }
+  .why-header { max-width: 600px; margin: 0 auto 60px; }
+  .why-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .why-card { background: var(--white); border: 1px solid var(--border); border-radius: 2px; padding: 36px 24px; transition: all 0.4s; position: relative; overflow: hidden; }
+  .why-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--heading-green), var(--heading-purple)); transform: scaleX(0); transition: transform 0.4s; }
+  .why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-card .icon { font-size: 2rem; margin-bottom: 16px; }
+  .why-card h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 10px; }
+  .why-card p { font-size: 0.82rem; color: var(--text-light); font-weight: 300; line-height: 1.7; font-family: 'Heebo', sans-serif; }
 
   /* ===== ABOUT ===== */
   #about { background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%); position: relative; overflow: hidden; }
@@ -106,43 +182,57 @@
   .about-video-overlay:hover .about-play-btn { background: var(--gold); transform: scale(1.08); }
   .about-play-btn svg { width: 28px; height: 28px; fill: var(--gold); margin-right: -4px; transition: fill 0.3s; }
   .about-video-overlay:hover .about-play-btn svg { fill: var(--white); }
-  /* כפתור סגירה/עצירה לסרטון */
   .about-video-close { position: absolute; top: 10px; left: 10px; width: 36px; height: 36px; border-radius: 50%; background: rgba(253,251,247,0.85); border: 1px solid var(--border); color: var(--text-mid); font-size: 1rem; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
   .about-video-close:hover { background: var(--white); color: var(--text-dark); }
   .about-video-close.visible { display: flex; }
   .about-img-badge { position: absolute; bottom: -20px; left: -20px; width: 120px; height: 120px; border-radius: 50%; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
-  .about-img-badge span:first-child { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); line-height: 1; }
-  .about-img-badge span:last-child { font-size: 0.62rem; letter-spacing: 0.12em; color: var(--text-light); text-align: center; line-height: 1.3; }
-  .about-text p { font-size: 0.95rem; font-weight: 300; color: var(--text-mid); line-height: 2; margin-bottom: 20px; }
-  .about-text p strong { font-weight: 500; color: var(--text-dark); }
+  .about-img-badge span:first-child { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .about-img-badge span:last-child { font-size: 0.62rem; letter-spacing: 0.12em; color: var(--text-light); text-align: center; line-height: 1.3; font-family: 'Heebo', sans-serif; }
+  .about-text p { font-size: 0.95rem; font-weight: 300; color: var(--text-mid); line-height: 2; margin-bottom: 20px; font-family: 'Frank Ruhl Libre', serif; }
+  .about-text p strong { font-weight: 500; color: var(--text-dark); font-family: 'Heebo', sans-serif; }
 
   /* ===== MATURE SKIN ===== */
   #mature { background: linear-gradient(160deg, var(--text-dark) 0%, #3A3530 100%); color: var(--white); position: relative; overflow: hidden; }
   #mature::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.04'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60C43.431 60 30 46.569 30 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
   .mature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; align-items: center; }
-  .mature-content .section-title { color: var(--white); }
-  .mature-content .section-subtitle { color: var(--gold-light); }
   .mature-content .gold-divider { background: linear-gradient(90deg, var(--gold-light), transparent); }
-  .mature-content p { font-size: 0.92rem; font-weight: 300; color: rgba(253,251,247,0.7); line-height: 2; margin-bottom: 24px; }
-  .mature-benefits h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--gold-light); margin-bottom: 20px; }
-  .benefit-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; font-size: 0.88rem; font-weight: 300; color: rgba(253,251,247,0.75); line-height: 1.5; }
+  .mature-content p { font-size: 0.92rem; font-weight: 300; color: rgba(253,251,247,0.7); line-height: 2; margin-bottom: 24px; font-family: 'Frank Ruhl Libre', serif; }
+  .mature-benefits h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 400; color: var(--gold-light); margin-bottom: 20px; }
+  .benefit-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; font-size: 0.88rem; font-weight: 300; color: rgba(253,251,247,0.75); line-height: 1.5; font-family: 'Heebo', sans-serif; }
   .benefit-dot { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .benefit-dot::after { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
-  .mature-visual { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 12px; }
+  /* Only first image in mature visual (item.jpeg) */
+  .mature-visual { display: flex; flex-direction: column; }
   .mature-img-item { border-radius: 2px; overflow: hidden; border: 1px solid rgba(201,169,110,0.2); background: rgba(255,255,255,0.05); transition: transform 0.4s ease; }
-  .mature-img-item:first-child { grid-column: 1 / -1; }
   .mature-img-item:hover { transform: scale(1.01); }
-  .mature-img-item img { width: 100%; height: 100%; display: block; object-fit: cover; min-height: 200px; }
-  .mature-img-item:first-child img { min-height: 260px; }
+  .mature-img-item img { width: 100%; height: 100%; display: block; object-fit: cover; min-height: 260px; }
 
   /* ===== SKINCARE LINE ===== */
   #skincare { background: var(--cream); position: relative; }
-  .skincare-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
+  .skincare-header { text-align: center; max-width: 600px; margin: 0 auto 30px; }
+  .skincare-header p { font-family: 'Frank Ruhl Libre', serif; font-size: 0.9rem; color: var(--text-mid); font-weight: 300; line-height: 1.8; max-width: 500px; margin: 0 auto; }
+
+  /* Oil video in skincare */
+  .skincare-video-wrap {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    background: var(--sage-pale);
+  }
+  .skincare-video-wrap video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+
   .skincare-view-btn-wrap { text-align: center; margin-bottom: 50px; }
   .skincare-view-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--text-dark); border: none; border-radius: 2px; font-family: 'Heebo', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(201,169,110,0.25); }
   .skincare-view-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,169,110,0.35); }
 
-  /* Skincare lightbox */
   .skincare-lightbox { display: none; position: fixed; inset: 0; z-index: 9000; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; flex-direction: column; gap: 20px; padding: 20px; }
   .skincare-lightbox.open { display: flex; }
   .skincare-lightbox-img-wrap { position: relative; display: flex; align-items: center; justify-content: center; max-width: 90vw; max-height: 80vh; }
@@ -151,7 +241,7 @@
   .skincare-lb-nav:hover { background: rgba(201,169,110,0.25); }
   .skincare-lb-nav.prev { right: -64px; }
   .skincare-lb-nav.next { left: -64px; }
-  .skincare-lb-counter { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(253,251,247,0.5); letter-spacing: 0.2em; }
+  .skincare-lb-counter { font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(253,251,247,0.5); letter-spacing: 0.2em; }
   .skincare-lb-close { position: fixed; top: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,251,247,0.1); border: 1px solid rgba(201,169,110,0.3); color: var(--gold-light); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
   .skincare-lb-close:hover { background: rgba(201,169,110,0.2); }
 
@@ -159,14 +249,14 @@
   .skincare-feature { text-align: center; padding: 30px 20px; border: 1px solid var(--border); border-radius: 2px; background: var(--white); transition: all 0.3s; }
   .skincare-feature:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
   .skincare-feature .icon { font-size: 1.8rem; margin-bottom: 12px; }
-  .skincare-feature h5 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--text-dark); margin-bottom: 8px; }
-  .skincare-feature p { font-size: 0.78rem; color: var(--text-light); font-weight: 300; line-height: 1.5; }
+  .skincare-feature h5 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400; color: var(--text-dark); margin-bottom: 8px; }
+  .skincare-feature p { font-size: 0.78rem; color: var(--text-light); font-weight: 300; line-height: 1.5; font-family: 'Heebo', sans-serif; }
 
   /* ===== CERTIFICATION ===== */
   #certification { background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%); text-align: center; position: relative; overflow: hidden; }
   #certification::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(143,175,138,0.1), transparent 70%); pointer-events: none; }
   .certification-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
-  .certification-inner p { font-size: 0.95rem; font-weight: 300; color: var(--text-mid); line-height: 2; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .certification-inner p { font-family: 'Frank Ruhl Libre', serif; font-size: 0.95rem; font-weight: 300; color: var(--text-mid); line-height: 2; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
   .cert-view-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: var(--text-dark); border: none; border-radius: 2px; font-family: 'Heebo', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(201,169,110,0.25); }
   .cert-view-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,169,110,0.35); }
   .cert-lightbox { display: none; position: fixed; inset: 0; z-index: 9000; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; flex-direction: column; gap: 20px; padding: 20px; }
@@ -177,7 +267,7 @@
   .cert-nav-btn:hover { background: rgba(201,169,110,0.25); }
   .cert-nav-btn.prev { right: -64px; }
   .cert-nav-btn.next { left: -64px; }
-  .cert-counter { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(253,251,247,0.5); letter-spacing: 0.2em; }
+  .cert-counter { font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(253,251,247,0.5); letter-spacing: 0.2em; }
   .cert-close { position: fixed; top: 20px; left: 20px; width: 44px; height: 44px; border-radius: 50%; background: rgba(253,251,247,0.1); border: 1px solid rgba(201,169,110,0.3); color: var(--gold-light); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
   .cert-close:hover { background: rgba(201,169,110,0.2); }
 
@@ -188,52 +278,36 @@
   .product-card { display: flex; gap: 20px; align-items: center; padding: 20px 24px; border: 1px solid var(--border); border-radius: 2px; transition: all 0.3s; cursor: pointer; }
   .product-card:hover { border-color: var(--gold); background: var(--gold-pale); transform: translateX(-4px); }
   .product-icon { width: 50px; height: 50px; border-radius: 50%; background: var(--sage-pale); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
-  .product-info h5 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 4px; }
-  .product-info p { font-size: 0.78rem; color: var(--text-light); font-weight: 300; }
+  .product-info h5 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 4px; }
+  .product-info p { font-size: 0.78rem; color: var(--text-light); font-weight: 300; font-family: 'Heebo', sans-serif; }
   .line40-visual { position: relative; }
   .line40-frame { width: 100%; background: linear-gradient(135deg, var(--sage-pale), var(--cream)); border-radius: 2px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid var(--border); }
   .line40-frame img { width: 100%; height: auto; object-fit: contain; display: block; border-radius: 2px; }
-  .line40-badge { position: absolute; top: 20px; right: 20px; background: var(--white); border: 1px solid var(--border); padding: 12px 20px; border-radius: 1px; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-style: italic; color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-
-  /* ===== WHY NATURAL ===== */
-  #why { background: linear-gradient(135deg, var(--sage-pale) 0%, var(--cream) 100%); text-align: center; position: relative; overflow: hidden; }
-  /* סרטון רקע לסקשן why */
-  .why-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.18; pointer-events: none; z-index: 0; }
-  #why > *:not(.why-bg-video) { position: relative; z-index: 1; }
-  .why-header { max-width: 600px; margin: 0 auto 60px; }
-  .why-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
-  .why-card { background: var(--white); border: 1px solid var(--border); border-radius: 2px; padding: 36px 24px; transition: all 0.4s; position: relative; overflow: hidden; }
-  .why-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--sage), var(--gold)); transform: scaleX(0); transition: transform 0.4s; }
-  .why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-  .why-card:hover::before { transform: scaleX(1); }
-  .why-card .icon { font-size: 2rem; margin-bottom: 16px; }
-  .why-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 500; color: var(--text-dark); margin-bottom: 10px; }
-  .why-card p { font-size: 0.82rem; color: var(--text-light); font-weight: 300; line-height: 1.7; }
+  .line40-badge { position: absolute; top: 20px; right: 20px; background: var(--white); border: 1px solid var(--border); padding: 12px 20px; border-radius: 1px; font-family: 'Playfair Display', serif; font-size: 0.85rem; font-style: italic; color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
 
   /* ===== QUOTE ===== */
   #quote { background: var(--white); text-align: center; padding: 130px 60px; position: relative; overflow: hidden; }
-  #quote::before { content: '"'; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-family: 'Cormorant Garamond', serif; font-size: 20rem; color: var(--sage-pale); line-height: 1; pointer-events: none; z-index: 0; }
+  #quote::before { content: '"'; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-family: 'Bodoni Moda', serif; font-size: 20rem; color: var(--sage-pale); line-height: 1; pointer-events: none; z-index: 0; }
   .quote-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
-  .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 300; font-style: italic; color: var(--text-dark); line-height: 1.4; margin-bottom: 24px; letter-spacing: 0.02em; }
-  .quote-text em { color: var(--sage); font-style: normal; }
+  .quote-text { font-family: 'Bodoni Moda', serif; font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 300; font-style: italic; color: var(--text-dark); line-height: 1.4; margin-bottom: 24px; letter-spacing: 0.02em; }
+  .quote-text em { background: var(--heading-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
   .quote-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto; }
 
   /* ===== CONTACT ===== */
   #contact { background: linear-gradient(160deg, var(--text-dark) 0%, #3A3530 100%); position: relative; overflow: hidden; }
   #contact::after { content: ''; position: absolute; bottom: 0; right: 0; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,169,110,0.08), transparent 70%); pointer-events: none; }
   .contact-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; position: relative; z-index: 1; }
-  .contact-info .section-title { color: var(--white); }
   .contact-info .gold-divider { background: linear-gradient(90deg, var(--gold), transparent); }
-  .contact-info p { font-size: 0.9rem; font-weight: 300; color: rgba(253,251,247,0.65); line-height: 1.8; margin-bottom: 30px; }
+  .contact-info p { font-family: 'Frank Ruhl Libre', serif; font-size: 0.9rem; font-weight: 300; color: rgba(253,251,247,0.65); line-height: 1.8; margin-bottom: 30px; }
   .contact-detail { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
   .contact-detail .icon { width: 40px; height: 40px; border: 1px solid rgba(201,169,110,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-  .contact-detail span { font-size: 0.88rem; color: rgba(253,251,247,0.7); font-weight: 300; direction: ltr; unicode-bidi: bidi-override; }
-  .whatsapp-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 14px 28px; background: #25D366; color: white; text-decoration: none; border-radius: 2px; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.08em; transition: all 0.3s; box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+  .contact-detail span { font-size: 0.88rem; color: rgba(253,251,247,0.7); font-weight: 300; direction: ltr; unicode-bidi: bidi-override; font-family: 'Heebo', sans-serif; }
+  .whatsapp-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 14px 28px; background: #25D366; color: white; text-decoration: none; border-radius: 2px; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.08em; transition: all 0.3s; box-shadow: 0 4px 20px rgba(37,211,102,0.3); font-family: 'Heebo', sans-serif; }
   .whatsapp-btn:hover { background: #20BD5C; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
   .contact-form { display: flex; flex-direction: column; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,169,110,0.8); font-weight: 300; }
-  .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,169,110,0.2); border-radius: 2px; padding: 14px 18px; color: var(--white); font-family: 'Heebo', sans-serif; font-size: 0.9rem; font-weight: 300; outline: none; transition: border-color 0.3s; direction: rtl; }
+  .form-group label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,169,110,0.8); font-weight: 300; font-family: 'Heebo', sans-serif; }
+  .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,169,110,0.2); border-radius: 2px; padding: 14px 18px; color: var(--white); font-family: 'Frank Ruhl Libre', serif; font-size: 0.9rem; font-weight: 300; outline: none; transition: border-color 0.3s; direction: rtl; }
   .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(253,251,247,0.25); }
   .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); background: rgba(255,255,255,0.08); }
   .form-group textarea { height: 120px; resize: none; }
@@ -242,8 +316,8 @@
 
   /* ===== FOOTER ===== */
   footer { background: #1E1B18; padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(201,169,110,0.1); }
-  footer .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; color: var(--gold); letter-spacing: 0.1em; }
-  footer p { font-size: 0.72rem; color: rgba(253,251,247,0.3); font-weight: 300; letter-spacing: 0.1em; }
+  footer .logo-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 300; color: var(--gold); letter-spacing: 0.1em; }
+  footer p { font-size: 0.72rem; color: rgba(253,251,247,0.3); font-weight: 300; letter-spacing: 0.1em; font-family: 'Heebo', sans-serif; }
 
   /* ===== MOBILE ===== */
   @media (max-width: 900px) {
@@ -253,9 +327,8 @@
     .hamburger { display: flex; }
     section { padding: 70px 24px; }
     .about-grid, .mature-grid, .line40-inner, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-    .mature-visual { grid-template-columns: 1fr 1fr; }
-    .mature-img-item img { min-height: 150px; }
-    .mature-img-item:first-child img { min-height: 200px; }
+    .mature-visual { flex-direction: column; }
+    .mature-img-item img { min-height: 200px; }
     .skincare-features { grid-template-columns: 1fr 1fr; }
     .why-cards { grid-template-columns: 1fr 1fr; }
     .about-img-badge { bottom: -10px; left: -10px; width: 90px; height: 90px; }
@@ -264,14 +337,15 @@
     footer { flex-direction: column; gap: 12px; text-align: center; }
     .cert-nav-btn.prev, .skincare-lb-nav.prev { right: -52px; }
     .cert-nav-btn.next, .skincare-lb-nav.next { left: -52px; }
-    .logo-placeholder { width: 170px; height: 170px; }
+    .logo-placeholder { width: 220px; height: 220px; }
+    .skincare-video-wrap { max-width: 100%; }
   }
 
   @media (max-width: 600px) {
     .skincare-features, .why-cards { grid-template-columns: 1fr; }
     .cert-nav-btn.prev, .skincare-lb-nav.prev { right: -40px; }
     .cert-nav-btn.next, .skincare-lb-nav.next { left: -40px; }
-    .logo-placeholder { width: 140px; height: 140px; }
+    .logo-placeholder { width: 180px; height: 180px; }
     .cert-lightbox-img-wrap, .skincare-lightbox-img-wrap { max-width: 95vw; }
     .cert-lightbox-img-wrap img, .skincare-lightbox-img-wrap img { max-width: 95vw; max-height: 70vh; }
   }
@@ -279,7 +353,7 @@
   /* ===== MOBILE NAV MENU ===== */
   .mobile-menu { position: fixed; inset: 0; background: rgba(253,251,247,0.97); z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(-100%); transition: transform 0.4s ease; }
   .mobile-menu.open { transform: translateX(0); }
-  .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text-dark); text-decoration: none; letter-spacing: 0.08em; }
+  .mobile-menu a { font-family: 'Bodoni Moda', serif; font-size: 2rem; font-weight: 300; color: var(--text-dark); text-decoration: none; letter-spacing: 0.08em; }
   .mobile-menu-close { position: absolute; top: 24px; left: 24px; font-size: 1.5rem; cursor: pointer; color: var(--text-mid); background: none; border: none; font-family: 'Heebo', sans-serif; }
 </style>
 </head>
@@ -320,11 +394,20 @@
   <div class="hero-inner">
     <div class="hero-logo-wrap">
       <div class="logo-placeholder">
-        <img src="logo.jpeg" alt="איריס צדיק">
+        <!-- Slideshow: logo.jpeg + item2.jpeg + item3.jpeg -->
+        <div class="logo-slide active" id="slide0">
+          <img src="logo.jpeg" alt="איריס צדיק">
+        </div>
+        <div class="logo-slide" id="slide1">
+          <img src="item2.jpeg" alt="טיפול עור בוגר">
+        </div>
+        <div class="logo-slide" id="slide2">
+          <img src="item3.jpeg" alt="טיפול עור בוגר">
+        </div>
       </div>
     </div>
     <h1 class="hero-name">איריס <span>צדיק</span></h1>
-    <p class="hero-subtitle">אומנות הטיפוח הטבעי</p>
+    <p class="hero-subtitle">נפלאות מהטבע</p>
     <div class="hero-divider"></div>
     <p class="hero-text">
       ריטואל פנים המשלב דיקור קוסמטי, צמחים פעילים ומגע מדויק<br>
@@ -338,6 +421,22 @@
   <div class="hero-scroll">
     <span class="scroll-text">גלול</span>
     <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- WHY NATURAL — moved here, first section after hero -->
+<section id="why">
+  <video class="why-bg-video" src="video.mp4" autoplay muted loop playsinline webkit-playsinline></video>
+  <div class="why-header reveal">
+    <span class="section-tag">הפילוסופיה שלי</span>
+    <h2 class="section-title">✨ למה לבחור<br>בטיפול טבעי?</h2>
+    <div class="gold-divider" style="margin:20px auto 0"></div>
+  </div>
+  <div class="why-cards">
+    <div class="why-card reveal"><div class="icon">🌿</div><h4>עבודה עם הגוף</h4><p>לא נגדו — טיפוח שמכבד ועובד עם המנגנונים הטבעיים של גופך</p></div>
+    <div class="why-card reveal" style="transition-delay:0.1s"><div class="icon">✨</div><h4>תוצאות עדינות אך עמוקות</h4><p>שינוי אמיתי שמגיע מעמוק, לא רק על פני השטח</p></div>
+    <div class="why-card reveal" style="transition-delay:0.2s"><div class="icon">🌸</div><h4>ללא חומרים אגרסיביים</h4><p>רק רכיבים טבעיים שהעור מכיר ואוהב</p></div>
+    <div class="why-card reveal" style="transition-delay:0.3s"><div class="icon">💫</div><h4>גוף, עור ונפש</h4><p>חיבור הוליסטי שלם המאחד את כל המרכיבים של יופי אמיתי</p></div>
   </div>
 </section>
 
@@ -361,7 +460,7 @@
     </div>
     <div class="reveal" style="transition-delay:0.2s">
       <span class="section-tag">קצת עליי</span>
-      <h2 class="section-title">נעים מאוד,<br>אני <em style="font-style:italic;color:var(--sage)">איריס צדיק</em></h2>
+      <h2 class="section-title">נעים מאוד,<br>אני <em style="font-style:italic;">איריס צדיק</em></h2>
       <div class="gold-divider"></div>
       <div class="about-text">
         <p><strong>מטפלת ברפואה טבעית ואסתטיקה הוליסטית</strong></p>
@@ -391,15 +490,10 @@
         <div class="benefit-item"><div class="benefit-dot"></div><span>זוהר טבעי ובריא</span></div>
       </div>
     </div>
+    <!-- Only first image remains in mature section -->
     <div class="mature-visual reveal" style="transition-delay:0.2s">
       <div class="mature-img-item">
         <img src="item.jpeg" alt="טיפול עור בוגר">
-      </div>
-      <div class="mature-img-item">
-        <img src="item2.jpeg" alt="טיפול עור בוגר">
-      </div>
-      <div class="mature-img-item">
-        <img src="item3.jpeg" alt="טיפול עור בוגר">
       </div>
     </div>
   </div>
@@ -411,9 +505,14 @@
     <span class="section-tag">מוצרים טבעיים</span>
     <h2 class="section-title">🌸 קו הטיפוח הטבעי שלי</h2>
     <p class="section-subtitle">אליקסירים ותמציות צמחים לעור חי וקורן</p>
-    <p style="font-size:0.9rem;color:var(--text-mid);font-weight:300;line-height:1.8;max-width:500px;margin:0 auto">
+    <p>
       תכשירי טיפוח שנרקחו מתוך ידע וניסיון, בשילוב רכיבים טבעיים פעילים שמזינים את העור לעומק.
     </p>
+  </div>
+
+  <!-- Oil video -->
+  <div class="skincare-video-wrap reveal">
+    <video src="oil.mp4" autoplay muted loop playsinline webkit-playsinline></video>
   </div>
 
   <div class="skincare-view-btn-wrap reveal">
@@ -490,7 +589,7 @@
   <div class="line40-inner">
     <div class="reveal">
       <span class="section-tag">לגילאי 40+</span>
-      <h2 class="section-title">🌸 קו הטיפוח<br><em style="font-style:italic;color:var(--sage)">לגילאי 40+</em></h2>
+      <h2 class="section-title">🌸 קו הטיפוח<br><em style="font-style:italic;">לגילאי 40+</em></h2>
       <div class="gold-divider"></div>
       <p class="section-subtitle" style="margin-bottom:30px">פורמולות צמחים פעילות לעור בוגר</p>
       <div class="line40-products">
@@ -507,7 +606,7 @@
           <div class="product-info"><h5>רכיבים טבעיים מעוררי התחדשות</h5><p>צמחים פעילים לחיוניות העור</p></div>
         </div>
       </div>
-      <p style="margin-top:24px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--gold)">✨ לשימור התוצאה גם בבית</p>
+      <p style="margin-top:24px;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--gold)">✨ לשימור התוצאה גם בבית</p>
     </div>
     <div class="line40-visual reveal" style="transition-delay:0.2s">
       <div class="line40-frame">
@@ -515,22 +614,6 @@
       </div>
       <div class="line40-badge">לגילאי 40+</div>
     </div>
-  </div>
-</section>
-
-<!-- WHY NATURAL -->
-<section id="why">
-  <video class="why-bg-video" src="video.mp4" autoplay muted loop playsinline webkit-playsinline></video>
-  <div class="why-header reveal">
-    <span class="section-tag">הפילוסופיה שלי</span>
-    <h2 class="section-title">✨ למה לבחור<br>בטיפול טבעי?</h2>
-    <div class="gold-divider" style="margin:20px auto 0"></div>
-  </div>
-  <div class="why-cards">
-    <div class="why-card reveal"><div class="icon">🌿</div><h4>עבודה עם הגוף</h4><p>לא נגדו — טיפוח שמכבד ועובד עם המנגנונים הטבעיים של גופך</p></div>
-    <div class="why-card reveal" style="transition-delay:0.1s"><div class="icon">✨</div><h4>תוצאות עדינות אך עמוקות</h4><p>שינוי אמיתי שמגיע מעמוק, לא רק על פני השטח</p></div>
-    <div class="why-card reveal" style="transition-delay:0.2s"><div class="icon">🌸</div><h4>ללא חומרים אגרסיביים</h4><p>רק רכיבים טבעיים שהעור מכיר ואוהב</p></div>
-    <div class="why-card reveal" style="transition-delay:0.3s"><div class="icon">💫</div><h4>גוף, עור ונפש</h4><p>חיבור הוליסטי שלם המאחד את כל המרכיבים של יופי אמיתי</p></div>
   </div>
 </section>
 
@@ -591,6 +674,18 @@
   // Mobile menu
   function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
   function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Hero logo slideshow with fade
+  (function() {
+    const slides = document.querySelectorAll('.logo-slide');
+    if (!slides.length) return;
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 3000);
+  })();
 
   // About video - play
   function playAboutVideo() {
